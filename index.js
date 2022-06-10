@@ -63,7 +63,7 @@ app.post('/', (req, res) => {
     res.json(req.body.challenge);
   } else {
     const event = req.body.event;
-    if (!event.bot_id && !event.subtype) {
+    if (event && !event.bot_id && !event.subtype) {
       const city = stripName(event.text);
       getWeatherData(city, (err, weatherData) => {
         if (err) {
@@ -74,11 +74,13 @@ app.post('/', (req, res) => {
             if (err) {
               res.status(500).send(err);
             } else {
-              res.end()
+              res.end();
             }
           });
         }
       });
+    } else {
+      res.end();
     }
   }
 });
