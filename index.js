@@ -9,8 +9,8 @@ const port = 8000;
 
 const getWeatherData = (city, cb) => {
   axios(`https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${process.env.OPEN_WEATHER_API_KEY}`)
-  .then(data => {
-    cb(null, data.data);
+  .then(result => {
+    cb(null, result.data);
   })
   .catch(err => {
     cb(err);
@@ -26,7 +26,7 @@ const formatWeatherData = (weatherData) => {
   const botText =
     `The current weather in *${name}* is: \n
     description - *${weather}* \n
-    temperature - *${Math.round(temp)} ˚C*, \n
+    temperature - *${Math.round(temp * (9 / 5)) + 32} ˚F*, \n
     wind speed - *${windSpeed} mph*  \n
     humidity - *${humidity}*%`;
   return botText;
